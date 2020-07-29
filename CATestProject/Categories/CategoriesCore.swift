@@ -9,14 +9,14 @@
 import ComposableArchitecture
 
 struct CategoriesState: Equatable {
-//  var currentCategory: Category?
+  var currentCategory: Category?
   var categories: [Category] = []
 }
 
-enum CategoriesAction {
+enum CategoriesAction: Equatable {
   case loadTriggered
   case response(Result<[Category], PartnersClient.Failure>)
-  case categoryTriggered(Category)
+  case categoryTriggered(Category?)
 }
 
 struct CategoriesEnvironment {
@@ -41,8 +41,11 @@ let categoriesReducer = Reducer<CategoriesState, CategoriesAction, CategoriesEnv
 
   case .response(.failure):
     return .none
-  case .categoryTriggered(let category):
-//    state.currentCategory = category
+  case .categoryTriggered(.some(let category)):
+    state.currentCategory = category
+    return .none
+  case .categoryTriggered(.none):
+    state.currentCategory = nil
     return .none
   }
 }

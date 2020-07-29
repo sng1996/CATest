@@ -9,7 +9,7 @@
 import ComposableArchitecture
 
 struct PartnersFlowState: Equatable {
-//  var currentCategory: Category?
+  var currentCategory: Category?
   var categories: [Category] = []
   var partners: [Partner] = []
 }
@@ -18,12 +18,12 @@ extension PartnersFlowState {
   var categoriesState: CategoriesState {
     get {
       CategoriesState(
-//        currentCategory: currentCategory,
+        currentCategory: currentCategory,
         categories: categories
       )
     }
     set {
-//      currentCategory = newValue.currentCategory
+      currentCategory = newValue.currentCategory
       categories = newValue.categories
     }
   }
@@ -31,12 +31,12 @@ extension PartnersFlowState {
   var partnersState: PartnersState {
     get {
       PartnersState(
-//        currentCategory: currentCategory,
+        currentCategory: currentCategory,
         partners: partners
       )
     }
     set {
-//      currentCategory = newValue.currentCategory
+      currentCategory = newValue.currentCategory
       partners = newValue.partners
     }
   }

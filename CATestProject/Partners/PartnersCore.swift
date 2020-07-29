@@ -16,6 +16,7 @@ struct PartnersState: Equatable {
 enum PartnersAction {
   case loadTriggered
   case response(Result<[Partner], PartnersClient.Failure>)
+  case viewDisappeared
 }
 
 struct PartnersEnvironment {
@@ -39,6 +40,10 @@ let partnersReducer = Reducer<PartnersState, PartnersAction, PartnersEnvironment
     return .none
 
   case .response(.failure):
+    return .none
+    
+  case .viewDisappeared:
+    state.partners = []
     return .none
   }
 }

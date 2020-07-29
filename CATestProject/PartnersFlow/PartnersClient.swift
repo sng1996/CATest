@@ -16,7 +16,7 @@ struct Category: Decodable, Equatable, Identifiable, Hashable {
 }
 
 struct Partner: Decodable, Equatable, Identifiable {
-  let id: String
+  let id: Int
   let name: String
   let installmentMin: Int
 }

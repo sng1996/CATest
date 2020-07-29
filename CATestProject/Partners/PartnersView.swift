@@ -17,6 +17,7 @@ struct PartnersView: View {
   
   enum Action {
     case viewAppeared
+    case viewDisappeared
   }
   
   let store: Store<PartnersFlowState, PartnersFlowAction>
@@ -31,15 +32,19 @@ struct PartnersView: View {
     WithViewStore(self.localStore.scope(state: { $0.viewState }, action: PartnersAction.viewAction)) { viewStore in
       List {
         ForEach(viewStore.partners) { partner in
-          VStack {
+          VStack(alignment: .leading) {
             Text(partner.name)
             Text("Минимальный срок рассрочки \(partner.installmentMin)")
+              .foregroundColor(.gray)
           }
         }
       }
-      .navigationBarTitle(viewStore.currentCategory?.name ?? "Пока пусто")
+      .navigationBarTitle(viewStore.currentCategory?.name ?? "Unknown")
       .onAppear {
           viewStore.send(.viewAppeared)
+      }
+      .onDisappear {
+        viewStore.send(.viewDisappeared)
       }
     }
   }
@@ -59,6 +64,8 @@ extension PartnersAction {
     switch localAction {
     case .viewAppeared:
       return .loadTriggered
+    case .viewDisappeared:
+      return .viewDisappeared
     }
   }
 }

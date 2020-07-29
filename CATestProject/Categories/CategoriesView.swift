@@ -12,12 +12,12 @@ import SwiftUI
 struct CategoriesView: View {
   struct ViewState: Equatable {
     var categories: [Category] = []
-//    var selectedCategory: Category?
+    var selectedCategory: Category?
   }
   
   enum ViewAction {
     case viewAppeared
-    case categoryTapped(category: Category)
+    case categoryTapped(category: Category?)
   }
   
   let store: Store<PartnersFlowState, PartnersFlowAction>
@@ -34,12 +34,12 @@ struct CategoriesView: View {
         List {
           ForEach(viewStore.categories) { category in
             NavigationLink(
-              destination: PartnersView(store: self.store)
-//              tag: category,
-//              selection: viewStore.binding(
-//                get: { $0.selectedCategory },
-//                send: ViewAction.categoryTapped(category: category)
-//              )
+              destination: PartnersView(store: self.store),
+              tag: category,
+              selection: viewStore.binding(
+                get: { $0.selectedCategory },
+                send: ViewAction.categoryTapped(category:)
+              )
             ) {
               HStack {
                 Image(systemName: "person")
@@ -60,8 +60,8 @@ struct CategoriesView: View {
 extension CategoriesState {
   var viewState: CategoriesView.ViewState {
     CategoriesView.ViewState(
-      categories: categories
-//      selectedCategory: currentCategory
+      categories: categories,
+      selectedCategory: currentCategory
     )
   }
 }

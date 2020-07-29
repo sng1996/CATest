@@ -17,8 +17,20 @@ struct AppView: View {
       networkClient: NetworkClient.live,
       mainQueue: DispatchQueue.main.eraseToAnyScheduler()
   ))
-
+  @State var selectedTab = 0
+  
   var body: some View {
-    CategoriesView(store: store.scope(state: { $0.partners }, action: AppAction.partners))
+    TabView(selection: $selectedTab) {
+      CategoriesView(store: store.scope(state: { $0.partners }, action: AppAction.partners))
+        .tabItem {
+          Image(systemName: "1.circle")
+          Text("Партнеры")
+      }.tag(0)
+      Text("Что-то еще")
+        .tabItem {
+          Image(systemName: "2.circle")
+          Text("Что-то еще")
+      }.tag(1)
+    }
   }
 }
